@@ -38,9 +38,11 @@ name
 host_id
 host_name
 neighbourhood_group
-neighbourhood,latitude
-longitude,room_type
-price,
+neighbourhood
+latitude
+longitude
+room_type
+price
 minimum_nights
 number_of_reviews
 last_review

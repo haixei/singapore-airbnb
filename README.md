@@ -40,7 +40,8 @@ host_name
 neighbourhood_group
 neighbourhood,latitude
 longitude,room_type
-price,minimum_nights
+price,
+minimum_nights
 number_of_reviews
 last_review
 reviews_per_month

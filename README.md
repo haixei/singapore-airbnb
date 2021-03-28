@@ -23,7 +23,7 @@ Singapore, a sovereign island city-state in South East Asia, brings attention fo
 	 - [1.2 Cross validation](docs/about_model.md#section)
 	 - [1.3 Adding models](docs/about_model.md#section)
 	 - [1.4 Stacking & blending](docs/about_model.md#section)
-4. [Training the model and result analysis](docs/about_model.md)
+4. [Training the model and result analysis](docs/result_analysis.md)
 
 ## The Goal
 - [x] Exploring the relationships between features

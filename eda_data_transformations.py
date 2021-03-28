@@ -8,6 +8,7 @@ import plotly.graph_objects as go
 import numpy as np
 from scipy.stats import yeojohnson
 from sklearn.preprocessing import LabelEncoder
+from wordcloud import WordCloud
 
 # EDA
 # - Each column describes a different feature of the listing
@@ -127,6 +128,75 @@ for i in fs_cat:
 
 print('Skewness after normalization:\n', data.skew())
 # >> showcaseAll(data)
+
+# Exploring the names and how they connect to the price
+wordcloud = WordCloud(background_color='white',
+                      width=1000,
+                      height=700
+                      ).generate(' '.join(data['name']))
+
+wordcloud_fig = pltx.imshow(wordcloud, width=1000, height=700)
+# >> wordcloud_fig.show()
+
+# Exploring importance of words related to price
+# I'm picking places with the same features but difference in names and comparing their
+# average prices
+def showDifference(data, keywords):
+    # Save the results in a dictionary form
+    result = {'values': keywords, 'avg_price_keyword': [], 'avg_price_no_keyword': []}
+    for keyword in keywords:
+        keyword_cols = data.loc[data['name'].str.contains(keyword)]
+
+        most_frequent_room_type = keyword_cols['room_type'].value_counts()[:1].index.tolist()
+        most_frequent_regions = keyword_cols['neighbourhood_group'].value_counts()[:2].index.tolist()
+
+        # Compare the columns to these with similar features but no keyword
+        no_keyword_cols = data.loc[~(data['name'].str.contains(keyword)) &
+                                   (data['room_type'] == most_frequent_room_type[0]) &
+                                   (data['neighbourhood_group'].isin(most_frequent_regions))]
+
+        avg_price_keyword = round(keyword_cols['price'].mean(), 2)
+        avg_price_no_keyword = round(no_keyword_cols['price'].mean(), 2)
+
+        # Append to the dictionary
+        result['avg_price_keyword'].append(avg_price_keyword)
+        result['avg_price_no_keyword'].append(avg_price_no_keyword)
+
+    return pd.DataFrame.from_dict(result)
+
+
+keywords = ['cozy|cosy', 'mrt', 'central', 'modern', 'balcony', '2br', 'chinatown', 'spacious']
+keyword_price_df = showDifference(data, keywords)
+
+keywords_fig = go.Figure()
+keywords_fig.add_trace(go.Bar(
+    x=keyword_price_df['values'],
+    y=keyword_price_df['avg_price_keyword'],
+    name='With keyword',
+    marker_color='Indigo'
+))
+keywords_fig.add_trace(go.Bar(
+    x=keyword_price_df['values'],
+    y=keyword_price_df['avg_price_no_keyword'],
+    name='Without keyword',
+    marker_color='LightSteelBlue'
+))
+keywords_fig.update_layout(title='Difference in price between names with and without the keyword')
+# >> keywords_fig.show()
+
+# Show the increase/decrease in price in %
+keyword_dict = keyword_price_df.to_dict()
+change_in_percent = {}
+amount_of_val = len(keyword_dict['values'])
+
+for i in range(amount_of_val):
+    with_keyword = keyword_dict['avg_price_keyword'][i]
+    without_keyword = keyword_dict['avg_price_no_keyword'][i]
+    percent_change = 100*((with_keyword - without_keyword)/np.abs(without_keyword))
+    change_in_percent[keyword_dict['values'][i]] = round(percent_change, 2)
+
+for key, value in change_in_percent.items():
+    print(key + ': ' + str(value) + '%')
 
 # Encoding caterogical features
 # First I remove the name value since it will pollute the one hot encoding and does

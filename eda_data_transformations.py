@@ -147,12 +147,12 @@ def showDifference(data, keywords):
     for keyword in keywords:
         keyword_cols = data.loc[data['name'].str.contains(keyword)]
 
-        most_frequent_room_type = keyword_cols['room_type'].value_counts()[:1].index.tolist()
+        most_frequent_room_type = keyword_cols['room_type'].value_counts()[:2].index.tolist()
         most_frequent_regions = keyword_cols['neighbourhood_group'].value_counts()[:2].index.tolist()
 
         # Compare the columns to these with similar features but no keyword
         no_keyword_cols = data.loc[~(data['name'].str.contains(keyword)) &
-                                   (data['room_type'] == most_frequent_room_type[0]) &
+                                   (data['room_type'].isin(most_frequent_room_type)) &
                                    (data['neighbourhood_group'].isin(most_frequent_regions))]
 
         avg_price_keyword = round(keyword_cols['price'].mean(), 2)
@@ -165,7 +165,8 @@ def showDifference(data, keywords):
     return pd.DataFrame.from_dict(result)
 
 
-keywords = ['cozy|cosy', 'mrt', 'central', 'modern', 'balcony', '2br', 'chinatown', 'spacious']
+keywords = ['cozy|cosy', 'mrt', 'central', 'modern', 'balcony', '2br|3br', 'chinatown', 'spacious', 'loft', 'luxury',
+            'penthouse', 'studio', 'park', 'dorm']
 keyword_price_df = showDifference(data, keywords)
 
 keywords_fig = go.Figure()
@@ -182,7 +183,7 @@ keywords_fig.add_trace(go.Bar(
     marker_color='LightSteelBlue'
 ))
 keywords_fig.update_layout(title='Difference in price between names with and without the keyword')
-# >> keywords_fig.show()
+keywords_fig.show()
 
 # Show the increase/decrease in price in %
 keyword_dict = keyword_price_df.to_dict()

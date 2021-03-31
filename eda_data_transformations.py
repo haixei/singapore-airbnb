@@ -1,13 +1,9 @@
 import pandas as pd
-import plotly as plt
 import plotly.figure_factory as ff
 import plotly.express as pltx
 from plotly.subplots import make_subplots
-import matplotlib as mpl
 import plotly.graph_objects as go
 import numpy as np
-from scipy.stats import yeojohnson
-from sklearn.preprocessing import LabelEncoder
 from wordcloud import WordCloud
 
 # EDA

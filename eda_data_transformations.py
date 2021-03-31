@@ -31,11 +31,26 @@ print('Skewness: ', data.price.skew())
 print('Kurtosis: ', data.price.kurt())
 
 # It's visible that the price does not follow normal distribution
-# Therefore, I'm going to transform it using a Yeo Johnson method
+# Therefore, I'm going to transform it using a log1p method
 data['price'] = np.log1p(data.price)
 fig_price_norm = ff.create_distplot([data.price], ['Price'])
 fig_price_norm.update_layout(title_text='Normalized Price Data')
 # >> fig_price_norm.show()
+
+# Filling missing values
+missing_values_count = data.isnull().sum()
+print('Missing values:\n', missing_values_count)
+
+# It looks like there's a lot of missing values in last_review and reviews_per_month columns and
+# they are connected to each other.. If there's no reviews, there's no reviews per month or a last review
+data = data.drop(['last_review'], axis=1)
+data['reviews_per_month'] = data['reviews_per_month'].fillna(0)
+
+# There's also two missing names, since it's a small number it's fair to just drop them
+data = data[data['name'].notna()]
+
+mvc_new = data.isnull().sum()
+print('Missing values after cleaning:\n', mvc_new)
 
 # Visualising features with the price as our y axis
 def showcaseAll(data):
@@ -73,21 +88,6 @@ def showcaseAll(data):
 
 
 # >> showcaseAll(data)
-
-# Filling missing values
-missing_values_count = data.isnull().sum()
-print('Missing values:\n', missing_values_count)
-
-# It looks like there's a lot of missing values in last_review and reviews_per_month columns and
-# they are connected to each other.. If there's no reviews, there's no reviews per month or a last review
-data = data.drop(['last_review'], axis=1)
-data['reviews_per_month'] = data['reviews_per_month'].fillna(0)
-
-# There's also two missing names, since it's a small number it's fair to just drop them
-data = data[data['name'].notna()]
-
-mvc_new = data.isnull().sum()
-print('Missing values after cleaning:\n', mvc_new)
 
 # Visualising some singular features since I'm interested to look into them
 # I picked following, room_type and neighbourhood
@@ -183,7 +183,7 @@ keywords_fig.add_trace(go.Bar(
     marker_color='LightSteelBlue'
 ))
 keywords_fig.update_layout(title='Difference in price between names with and without the keyword')
-keywords_fig.show()
+# >> keywords_fig.show()
 
 # Show the increase/decrease in price in %
 keyword_dict = keyword_price_df.to_dict()

@@ -74,5 +74,39 @@ Another thing I'm curious about is how popular are certain room types and neighb
 ![Price map](/plots/neighbourhood-histogram.png)
 It seems like people who travel to Singapore are not very likely to stay in shared rooms, otherwise they would have more popularity. That makes me wonder if there's a better alternative around for people who want to stay somewhere for cheap or if it's because people who travel there stay for a vacation so they need a better standard (what would make a lot of sense since tourism is a very important factor in Singapore's economy). It's not related to our model but still an interesting thought.
 
-## 1.3 Transforming features
+## 1.3 Skewness and normalization of the features
 We already took care of our target but since we learned a lot about our features in the previous section, it's time to transform them as well. I will start with exploring the skewness and normalizing the data.
+![Skewness](/plots/skewness-01.png)
+We can see that some features have skewness way over the line of a correct one, so I'm going to apply the log function over them. Normalizing data will let us look at it in a different, better way. You can see the result on the graph below.
+```
+Skewness after normalization:
+latitude                          1.661790
+longitude                        -0.740894
+price                             0.309884
+minimum_nights                    1.209086
+number_of_reviews                 0.799579
+reviews_per_month                 1.393804
+calculated_host_listings_count    0.372717
+availability_365                 -1.313386
+```
+![Features against price (normalized)](/plots/price-num-features-02.png)
+
+## Diving deeper into the names
+This part of the exploration is I'd say quite experimental since I'm not sure what kind of results it could bring. What I wish to see is what kind of information we can extract from the names since they might hide something interesting. My bet is on the way renters frame the listing, the size of a place and additional features like being close to public transport or the airport. I'm going to start with creating a word cloud to see what kind of keywords are used most often.
+![Listing name word map](/plots/name-word-map.png)
+We can see from the image that the most used words are related to the size of a place, where it's places and the feel it should give off. Knowing that I want to pick some of the more popular words and do a small experiment. I will take rentals with the keyword and ones of the same kind but without it, get the average prices and compare. I'm really curious to see by how much they differ.
+![Price difference](/plots/keyword-price-diff.png)
+There really seem to be a notable difference in average price between some of them, especially "penthouse", "luxury, "2br|3br| and "dorm". This information might be very useful for our model but I'm going to be careful with that. Some of these might be related to already existing features in our data set, I'm going to look more into this in the next step which is feature engineering.
+
+## Encoding caterogical features
+I will be using one hot encoding since it's probably the best way for these features. Label encoding simply doesn't fit them and could lead the model to thinking that labels of a higher number are related to something, when they are just simply different things. With too many unique values, that kind of approach could be a big issue so I will be dropping the name and host name features. The name can be useful but we already saw how we can extract important information from it, so we'll add some columns representing that later. Host name is just their name and won't be useful. There might be some relation between price and the host but that can be represented by their id.
+```
+Data after encoding:  (7905, 59)
+```
+## Correlation heatmap
+The last step in this EDA will be displaying the correlation between features using a heatmap.
+![Heatmap graph](/plots/corr-01.png)
+There's not too many visible relationships, which is pretty good. I wish we had more strong relationships related to price, but we will do fine without them too. Most of these correlations makes sense, like room type being related to a neightbourhood group, so at least we don't have to worry about some weird links between the features that we'd have to explore more in depth. The only thing that I need to keep in mind is, once again, the relationship between review features that are closely linked.
+
+## Next step
+Since we analyzed the data set in depth already, it's time to move to working on our data for a little bit. Feel free to check the next step which is [feature engineering.](docs/feat-eng.md)

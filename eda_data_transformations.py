@@ -198,8 +198,8 @@ for key, value in change_in_percent.items():
 # Encoding caterogical features
 # First I remove the name value since it will pollute the one hot encoding and does
 # not contribute that much to the end result
-data = data.drop(['name', 'host_name'], axis=1)
-data = y = pd.get_dummies(data)
+data = data.drop(['name', 'host_name', 'neighbourhood_group'], axis=1)
+data = pd.get_dummies(data)
 print('Data after encoding: ', data.shape)
 
 # Exploring how features are correlated to each other and the price of a rental

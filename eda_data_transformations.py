@@ -125,6 +125,7 @@ for i in fs_cat:
 print('Skewness after normalization:\n', data.skew())
 # >> showcaseAll(data)
 
+
 # Exploring the names and how they connect to the price
 wordcloud = WordCloud(background_color='white',
                       width=1000,
@@ -133,6 +134,7 @@ wordcloud = WordCloud(background_color='white',
 
 wordcloud_fig = pltx.imshow(wordcloud, width=1000, height=700)
 # >> wordcloud_fig.show()
+
 
 # Exploring importance of words related to price
 # I'm picking places with the same features but difference in names and comparing their
@@ -194,6 +196,7 @@ for i in range(amount_of_val):
 
 for key, value in change_in_percent.items():
     print(key + ': ' + str(value) + '%')
+
 
 # Encoding caterogical features
 # First I remove the name value since it will pollute the one hot encoding and does

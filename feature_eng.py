@@ -1,4 +1,6 @@
 from eda_data_transformations import data
+import plotly.express as pltx
+import plotly.graph_objects as go
 import pandas as pd
 
 # Making sure that the data got imported correctly, and importing original data to use the names
@@ -18,7 +20,7 @@ for i in data.index:
         data['luxury'][i] = 1
     elif 'dorm' in data_og['name'][i]:
         data['dorm'][i] = 1
-    elif ('2br' in data_og['name'][i]) or ('3br' in data_og['name'][i]):
+    elif ('2br' in data_og['name'][i]) or ('3br' in data_og['name'][i] or ('spacious' in data_og['name'][i])):
         data['spacious'][i] = 1
 
 print('Amount of filled rows:\n', data.spacious.value_counts())

@@ -7,7 +7,7 @@ In this case I really wanted to try using stacked models to make the predictions
 ### 1.1.1 Setting up cross validation
 If you haven't come across cross validation or want to refresh your memory, I made a small graph representing how it works so it's more clear.
 In our case I'm going to set up a cross validation using the sklearn method with 12 folds and 4 repeats. I think it's a good amount for our model.
-![Cross validation](https://i.imgur.com/jwjoHRQ.png)
+![Cross validation](https://i.imgur.com/Uj61DOs.png)
 
 ### 1.1.2 Adding models
 Before the stacking we need to select appropriate models, I selected 5 of them but in this case using an uneven number is not that important since we're not classifying anything.

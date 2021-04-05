@@ -91,19 +91,19 @@ availability_365                 -1.313386
 ```
 ![Features against price (normalized)](/plots/price-num-features-02.png)
 
-## Diving deeper into the names
+## 1.4 Diving deeper into the names
 This part of the exploration is I'd say quite experimental since I'm not sure what kind of results it could bring. What I wish to see is what kind of information we can extract from the names since they might hide something interesting. My bet is on the way renters frame the listing, the size of a place and additional features like being close to public transport or the airport. I'm going to start with creating a word cloud to see what kind of keywords are used most often.
 ![Listing name word map](/plots/name-word-map.png)
 We can see from the image that the most used words are related to the size of a place, where it's places and the feel it should give off. Knowing that I want to pick some of the more popular words and do a small experiment. I will take rentals with the keyword and ones of the same kind but without it, get the average prices and compare. I'm really curious to see by how much they differ.
 ![Price difference](/plots/keyword-price-diff.png)
 There really seem to be a notable difference in average price between some of them, especially "penthouse", "luxury, "2br|3br| and "dorm". This information might be very useful for our model but I'm going to be careful with that. Some of these might be related to already existing features in our data set, I'm going to look more into this in the next step which is feature engineering.
 
-## Encoding caterogical features
+## 1.4 Encoding caterogical features
 I will be using one hot encoding since it's probably the best way for these features. Label encoding simply doesn't fit them and could lead the model to thinking that labels of a higher number are related to something, when they are just simply different things. With too many unique values, that kind of approach could be a big issue so I will be dropping the name and host name features. The name can be useful but we already saw how we can extract important information from it, so we'll add some columns representing that later. Host name is just their name and won't be useful. There might be some relation between price and the host but that can be represented by their id.
 ```
 Data after encoding:  (7905, 59)
 ```
-## Correlation heatmap
+## 1.5 Correlation heatmap
 The last step in this EDA will be displaying the correlation between features using a heatmap.
 ![Heatmap graph](/plots/corr-01.png)
 There's not too many visible relationships, which is pretty good. I wish we had more strong relationships related to price, but we will do fine without them too. Most of these correlations makes sense, like room type being related to a neightbourhood group, so at least we don't have to worry about some weird links between the features that we'd have to explore more in depth. The only thing that I need to keep in mind is, once again, the relationship between review features that are closely linked.

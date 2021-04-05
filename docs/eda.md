@@ -109,4 +109,4 @@ The last step in this EDA will be displaying the correlation between features us
 There's not too many visible relationships, which is pretty good. I wish we had more strong relationships related to price, but we will do fine without them too. Most of these correlations makes sense, like room type being related to a neightbourhood group, so at least we don't have to worry about some weird links between the features that we'd have to explore more in depth. The only thing that I need to keep in mind is, once again, the relationship between review features that are closely linked.
 
 ## Next step
-Since we analyzed the data set in depth already, it's time to move to working on our data for a little bit. Feel free to check the next step which is [feature engineering.](docs/feat-eng.md)
+Since we analyzed the data set in depth already, it's time to move to working on our data for a little bit. Feel free to check the next step which is [feature engineering.](feat-eng.md)

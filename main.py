@@ -12,8 +12,8 @@ import numpy as np
 import plotly.graph_objects as go
 
 # Create variables
-X = data_without_keywords.drop(['price'], axis=1)
-y = data_without_keywords['price']
+X = data.drop(['price'], axis=1)
+y = data['price']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
@@ -107,7 +107,7 @@ def blended_predictions(X):
 
 # Get final precitions from the blended model
 train_score = mse(y_train, blended_predictions(X_train))
-print('RMSLE score on train data:', train_score)
+print('MSE score on train data:', train_score)
 
 # Test the model
 test_score = mse(y_test, blended_predictions(X_test))

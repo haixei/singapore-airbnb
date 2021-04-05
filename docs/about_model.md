@@ -27,13 +27,13 @@ stack = StackingCVRegressor(regressors=(lgbm, rf, svr, ridge, lasso),
                             use_features_in_secondary=True)
 # (...)
                             
-# Blending the models together
+# Blending the models
 def blended_predictions(X):
     return ((0.1 * full_ridge.predict(X)) +
             (0.2 * full_lgbm.predict(X)) +
-            (0.2 * full_svr.predict(X)) +
-            (0.1 * full_lasso.predict(X)) +
-            (0.05 * full_gb.predict(X)) +
+            (0.1 * full_svr.predict(X)) +
+            (0.05 * full_lasso.predict(X)) +
+            (0.2 * rf.predict(X)) +
             (0.35 * stack.predict(np.array(X))))
 ```
 

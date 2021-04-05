@@ -36,3 +36,5 @@ def blended_predictions(X):
             (0.05 * full_gb.predict(X)) +
             (0.35 * stack.predict(np.array(X))))
 ```
+
+We went trough everything that is important to the model, it's time to train it and [explore the results.](result_analysis.md)

@@ -19,7 +19,7 @@ When setting up the models I made sure to implement scaling on the data before u
 - **Ridge** - This model solves a regression model where the loss function is the linear least squares function and regularization is given by the l2-norm. Also known as Ridge Regression or Tikhonov regularization.
 
 ## 1.2 Stacking and blending
-I used StackingCVRegressor from mlxtend to stack the models together and set LGBM as a meta regressor. For blending I created my own function that takes a little bit from every model and assigns a weight to their prediction based on score of the models that I find out before by using MSE metric. After scoring the models I fit them with the full data and set up the stack.
+I used StackingCVRegressor from mlxtend to stack the models together and set LGBM as a meta regressor. For blending I created my own function that takes a little bit from every model and assigns a weight to their prediction based on score of the models that I find out before by using RMSE metric. After scoring the models I fit them with the full data and set up the stack.
 ```python
 # Stacking the models
 stack = StackingCVRegressor(regressors=(lgbm, rf, svr, ridge, lasso),

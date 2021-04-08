@@ -1,4 +1,4 @@
-![](https://i.imgur.com/fVm8miD.png)
+![](https://i.imgur.com/UJeNsLq.png)
 # Singapore's Airbnb Data Analysis
 Singapore, a sovereign island city-state in South East Asia, brings attention for many rasons. It's a popular travel destination as well as the center of a lot of businesses. Naturally, it brings a lot of tourism which is a major contributor to its economy and people who need to stay for work related reasons. Airbnb in such place has a lot of popularity. The reasonable prices it offers attract a lot of customers and the variety of options is only a plus. From shared rooms to entire mansions, hosts created a catalog of offers that is impossible to ignore. In this data analysis I will go trough the information collected from the company and try to learn more about the market there.
 
